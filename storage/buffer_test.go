@@ -19,9 +19,9 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/prometheus/prometheus/model/histogram"
-	"github.com/prometheus/prometheus/tsdb/chunkenc"
-	"github.com/prometheus/prometheus/tsdb/tsdbutil"
+	"github.com/clarete-dd/prometheus_wo_otel/model/histogram"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb/chunkenc"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb/tsdbutil"
 )
 
 func TestSampleRing(t *testing.T) {

@@ -22,12 +22,12 @@ import (
 	"slices"
 	"sync"
 
-	"github.com/prometheus/prometheus/model/histogram"
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/tsdb/chunkenc"
-	"github.com/prometheus/prometheus/tsdb/chunks"
-	tsdb_errors "github.com/prometheus/prometheus/tsdb/errors"
-	"github.com/prometheus/prometheus/util/annotations"
+	"github.com/clarete-dd/prometheus_wo_otel/model/histogram"
+	"github.com/clarete-dd/prometheus_wo_otel/model/labels"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb/chunkenc"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb/chunks"
+	tsdb_errors "github.com/clarete-dd/prometheus_wo_otel/tsdb/errors"
+	"github.com/clarete-dd/prometheus_wo_otel/util/annotations"
 )
 
 type mergeGenericQuerier struct {

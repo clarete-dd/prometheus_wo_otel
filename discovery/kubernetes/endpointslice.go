@@ -30,8 +30,8 @@ import (
 	"k8s.io/client-go/tools/cache"
 	"k8s.io/client-go/util/workqueue"
 
-	"github.com/prometheus/prometheus/discovery/targetgroup"
-	"github.com/prometheus/prometheus/util/strutil"
+	"github.com/clarete-dd/prometheus_wo_otel/discovery/targetgroup"
+	"github.com/clarete-dd/prometheus_wo_otel/util/strutil"
 )
 
 // EndpointSlice discovers new endpoint targets.

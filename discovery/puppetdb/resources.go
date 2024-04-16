@@ -19,7 +19,7 @@ import (
 
 	"github.com/prometheus/common/model"
 
-	"github.com/prometheus/prometheus/util/strutil"
+	"github.com/clarete-dd/prometheus_wo_otel/util/strutil"
 )
 
 type Resource struct {

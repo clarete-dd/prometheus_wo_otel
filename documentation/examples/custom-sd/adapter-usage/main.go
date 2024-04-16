@@ -31,10 +31,10 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/common/model"
 
-	prom_discovery "github.com/prometheus/prometheus/discovery"
-	"github.com/prometheus/prometheus/discovery/targetgroup"
-	"github.com/prometheus/prometheus/documentation/examples/custom-sd/adapter"
-	"github.com/prometheus/prometheus/util/strutil"
+	prom_discovery "github.com/clarete-dd/prometheus_wo_otel/discovery"
+	"github.com/clarete-dd/prometheus_wo_otel/discovery/targetgroup"
+	"github.com/clarete-dd/prometheus_wo_otel/documentation/examples/custom-sd/adapter"
+	"github.com/clarete-dd/prometheus_wo_otel/util/strutil"
 )
 
 var (

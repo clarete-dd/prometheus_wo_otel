@@ -20,7 +20,7 @@ import (
 	config_util "github.com/prometheus/common/config"
 	"github.com/stretchr/testify/require"
 
-	"github.com/prometheus/prometheus/config"
+	"github.com/clarete-dd/prometheus_wo_otel/config"
 )
 
 func TestInstallingNewTracerProvider(t *testing.T) {

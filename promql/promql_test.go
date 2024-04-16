@@ -22,7 +22,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"golang.org/x/sync/errgroup"
 
-	"github.com/prometheus/prometheus/util/teststorage"
+	"github.com/clarete-dd/prometheus_wo_otel/util/teststorage"
 )
 
 func newTestEngine() *Engine {

@@ -23,10 +23,10 @@ import (
 
 	"github.com/go-kit/log"
 
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/model/textparse"
-	"github.com/prometheus/prometheus/tsdb"
-	tsdb_errors "github.com/prometheus/prometheus/tsdb/errors"
+	"github.com/clarete-dd/prometheus_wo_otel/model/labels"
+	"github.com/clarete-dd/prometheus_wo_otel/model/textparse"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb"
+	tsdb_errors "github.com/clarete-dd/prometheus_wo_otel/tsdb/errors"
 )
 
 func getMinAndMaxTimestamps(p textparse.Parser) (int64, int64, error) {

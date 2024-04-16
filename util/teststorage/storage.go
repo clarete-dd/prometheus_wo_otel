@@ -21,11 +21,11 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/stretchr/testify/require"
 
-	"github.com/prometheus/prometheus/model/exemplar"
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/storage"
-	"github.com/prometheus/prometheus/tsdb"
-	"github.com/prometheus/prometheus/util/testutil"
+	"github.com/clarete-dd/prometheus_wo_otel/model/exemplar"
+	"github.com/clarete-dd/prometheus_wo_otel/model/labels"
+	"github.com/clarete-dd/prometheus_wo_otel/storage"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb"
+	"github.com/clarete-dd/prometheus_wo_otel/util/testutil"
 )
 
 // New returns a new TestStorage for testing purposes

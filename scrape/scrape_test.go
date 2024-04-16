@@ -40,21 +40,21 @@ import (
 	"github.com/prometheus/common/model"
 	"github.com/stretchr/testify/require"
 
-	"github.com/prometheus/prometheus/config"
-	"github.com/prometheus/prometheus/discovery"
-	"github.com/prometheus/prometheus/discovery/targetgroup"
-	"github.com/prometheus/prometheus/model/exemplar"
-	"github.com/prometheus/prometheus/model/histogram"
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/model/relabel"
-	"github.com/prometheus/prometheus/model/textparse"
-	"github.com/prometheus/prometheus/model/timestamp"
-	"github.com/prometheus/prometheus/model/value"
-	"github.com/prometheus/prometheus/storage"
-	"github.com/prometheus/prometheus/tsdb/chunkenc"
-	"github.com/prometheus/prometheus/util/pool"
-	"github.com/prometheus/prometheus/util/teststorage"
-	"github.com/prometheus/prometheus/util/testutil"
+	"github.com/clarete-dd/prometheus_wo_otel/config"
+	"github.com/clarete-dd/prometheus_wo_otel/discovery"
+	"github.com/clarete-dd/prometheus_wo_otel/discovery/targetgroup"
+	"github.com/clarete-dd/prometheus_wo_otel/model/exemplar"
+	"github.com/clarete-dd/prometheus_wo_otel/model/histogram"
+	"github.com/clarete-dd/prometheus_wo_otel/model/labels"
+	"github.com/clarete-dd/prometheus_wo_otel/model/relabel"
+	"github.com/clarete-dd/prometheus_wo_otel/model/textparse"
+	"github.com/clarete-dd/prometheus_wo_otel/model/timestamp"
+	"github.com/clarete-dd/prometheus_wo_otel/model/value"
+	"github.com/clarete-dd/prometheus_wo_otel/storage"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb/chunkenc"
+	"github.com/clarete-dd/prometheus_wo_otel/util/pool"
+	"github.com/clarete-dd/prometheus_wo_otel/util/teststorage"
+	"github.com/clarete-dd/prometheus_wo_otel/util/testutil"
 )
 
 func TestMain(m *testing.M) {
@@ -1208,7 +1208,7 @@ func TestScrapeLoopCache(t *testing.T) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	// Decreasing the scrape interval could make the test fail, as multiple scrapes might be initiated at identical millisecond timestamps.
-	// See https://github.com/prometheus/prometheus/issues/12727.
+	// See https://github.com/clarete-dd/prometheus_wo_otel/issues/12727.
 	sl := newBasicScrapeLoop(t, ctx, scraper, app, 100*time.Millisecond)
 
 	numScrapes := 0

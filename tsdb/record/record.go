@@ -22,12 +22,12 @@ import (
 
 	"github.com/prometheus/common/model"
 
-	"github.com/prometheus/prometheus/model/histogram"
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/storage"
-	"github.com/prometheus/prometheus/tsdb/chunks"
-	"github.com/prometheus/prometheus/tsdb/encoding"
-	"github.com/prometheus/prometheus/tsdb/tombstones"
+	"github.com/clarete-dd/prometheus_wo_otel/model/histogram"
+	"github.com/clarete-dd/prometheus_wo_otel/model/labels"
+	"github.com/clarete-dd/prometheus_wo_otel/storage"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb/chunks"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb/encoding"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb/tombstones"
 )
 
 // Type represents the data type of a record.

@@ -20,9 +20,9 @@ import (
 	"errors"
 	"io"
 
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/model/textparse"
-	"github.com/prometheus/prometheus/promql/parser"
+	"github.com/clarete-dd/prometheus_wo_otel/model/labels"
+	"github.com/clarete-dd/prometheus_wo_otel/model/textparse"
+	"github.com/clarete-dd/prometheus_wo_otel/promql/parser"
 )
 
 // PromQL parser fuzzing instrumentation for use with
@@ -31,7 +31,7 @@ import (
 // Fuzz each parser by building appropriately instrumented parser, ex.
 // FuzzParseMetric and execute it with it's
 //
-//     go-fuzz-build -func FuzzParseMetric -o FuzzParseMetric.zip github.com/prometheus/prometheus/promql
+//     go-fuzz-build -func FuzzParseMetric -o FuzzParseMetric.zip github.com/clarete-dd/prometheus_wo_otel/promql
 //
 // And then run the tests with the appropriate inputs
 //

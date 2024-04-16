@@ -25,7 +25,7 @@ import (
 	"github.com/prometheus/common/version"
 	"google.golang.org/grpc/credentials"
 
-	"github.com/prometheus/prometheus/config"
+	"github.com/clarete-dd/prometheus_wo_otel/config"
 )
 
 const serviceName = "prometheus"

@@ -29,8 +29,8 @@ import (
 	"go.uber.org/goleak"
 	"google.golang.org/protobuf/types/known/anypb"
 
-	"github.com/prometheus/prometheus/discovery"
-	"github.com/prometheus/prometheus/discovery/targetgroup"
+	"github.com/clarete-dd/prometheus_wo_otel/discovery"
+	"github.com/clarete-dd/prometheus_wo_otel/discovery/targetgroup"
 )
 
 var sdConf = SDConfig{

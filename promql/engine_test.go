@@ -28,17 +28,17 @@ import (
 	"github.com/stretchr/testify/require"
 	"go.uber.org/goleak"
 
-	"github.com/prometheus/prometheus/model/histogram"
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/model/timestamp"
-	"github.com/prometheus/prometheus/promql/parser"
-	"github.com/prometheus/prometheus/promql/parser/posrange"
-	"github.com/prometheus/prometheus/storage"
-	"github.com/prometheus/prometheus/tsdb/tsdbutil"
-	"github.com/prometheus/prometheus/util/annotations"
-	"github.com/prometheus/prometheus/util/stats"
-	"github.com/prometheus/prometheus/util/teststorage"
-	"github.com/prometheus/prometheus/util/testutil"
+	"github.com/clarete-dd/prometheus_wo_otel/model/histogram"
+	"github.com/clarete-dd/prometheus_wo_otel/model/labels"
+	"github.com/clarete-dd/prometheus_wo_otel/model/timestamp"
+	"github.com/clarete-dd/prometheus_wo_otel/promql/parser"
+	"github.com/clarete-dd/prometheus_wo_otel/promql/parser/posrange"
+	"github.com/clarete-dd/prometheus_wo_otel/storage"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb/tsdbutil"
+	"github.com/clarete-dd/prometheus_wo_otel/util/annotations"
+	"github.com/clarete-dd/prometheus_wo_otel/util/stats"
+	"github.com/clarete-dd/prometheus_wo_otel/util/teststorage"
+	"github.com/clarete-dd/prometheus_wo_otel/util/testutil"
 )
 
 func TestMain(m *testing.M) {
@@ -1516,7 +1516,7 @@ load 1ms
 		require.NoError(t, err)
 	}
 
-	// To test the fix for https://github.com/prometheus/prometheus/issues/8433.
+	// To test the fix for https://github.com/clarete-dd/prometheus_wo_otel/issues/8433.
 	_, err = app.Append(0, labels.FromStrings("__name__", "metric_timestamp"), 3600*1000, 1000)
 	require.NoError(t, err)
 
@@ -1665,7 +1665,7 @@ load 1ms
 				},
 			},
 		}, {
-			// Tests for https://github.com/prometheus/prometheus/issues/8433.
+			// Tests for https://github.com/clarete-dd/prometheus_wo_otel/issues/8433.
 			// The trick here is that the query range should be > lookback delta.
 			query: `timestamp(metric_timestamp @ 3600)`,
 			start: 0, end: 7 * 60, interval: 60,

@@ -25,8 +25,8 @@ import (
 
 	"github.com/prometheus/client_golang/prometheus"
 
-	"github.com/prometheus/prometheus/discovery"
-	"github.com/prometheus/prometheus/discovery/targetgroup"
+	"github.com/clarete-dd/prometheus_wo_otel/discovery"
+	"github.com/clarete-dd/prometheus_wo_otel/discovery/targetgroup"
 )
 
 func testUpdateServices(respHandler http.HandlerFunc) ([]*targetgroup.Group, error) {

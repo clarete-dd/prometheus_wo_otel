@@ -16,28 +16,28 @@
 package install
 
 import (
-	_ "github.com/prometheus/prometheus/discovery/aws"          // register aws
-	_ "github.com/prometheus/prometheus/discovery/azure"        // register azure
-	_ "github.com/prometheus/prometheus/discovery/consul"       // register consul
-	_ "github.com/prometheus/prometheus/discovery/digitalocean" // register digitalocean
-	_ "github.com/prometheus/prometheus/discovery/dns"          // register dns
-	_ "github.com/prometheus/prometheus/discovery/eureka"       // register eureka
-	_ "github.com/prometheus/prometheus/discovery/file"         // register file
-	_ "github.com/prometheus/prometheus/discovery/gce"          // register gce
-	_ "github.com/prometheus/prometheus/discovery/hetzner"      // register hetzner
-	_ "github.com/prometheus/prometheus/discovery/http"         // register http
-	_ "github.com/prometheus/prometheus/discovery/ionos"        // register ionos
-	_ "github.com/prometheus/prometheus/discovery/kubernetes"   // register kubernetes
-	_ "github.com/prometheus/prometheus/discovery/linode"       // register linode
-	_ "github.com/prometheus/prometheus/discovery/marathon"     // register marathon
-	_ "github.com/prometheus/prometheus/discovery/nomad"        // register nomad
-	_ "github.com/prometheus/prometheus/discovery/openstack"    // register openstack
-	_ "github.com/prometheus/prometheus/discovery/ovhcloud"     // register ovhcloud
-	_ "github.com/prometheus/prometheus/discovery/puppetdb"     // register puppetdb
-	_ "github.com/prometheus/prometheus/discovery/scaleway"     // register scaleway
-	_ "github.com/prometheus/prometheus/discovery/triton"       // register triton
-	_ "github.com/prometheus/prometheus/discovery/uyuni"        // register uyuni
-	_ "github.com/prometheus/prometheus/discovery/vultr"        // register vultr
-	_ "github.com/prometheus/prometheus/discovery/xds"          // register xds
-	_ "github.com/prometheus/prometheus/discovery/zookeeper"    // register zookeeper
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/aws"          // register aws
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/azure"        // register azure
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/consul"       // register consul
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/digitalocean" // register digitalocean
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/dns"          // register dns
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/eureka"       // register eureka
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/file"         // register file
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/gce"          // register gce
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/hetzner"      // register hetzner
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/http"         // register http
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/ionos"        // register ionos
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/kubernetes"   // register kubernetes
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/linode"       // register linode
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/marathon"     // register marathon
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/nomad"        // register nomad
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/openstack"    // register openstack
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/ovhcloud"     // register ovhcloud
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/puppetdb"     // register puppetdb
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/scaleway"     // register scaleway
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/triton"       // register triton
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/uyuni"        // register uyuni
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/vultr"        // register vultr
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/xds"          // register xds
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/zookeeper"    // register zookeeper
 )

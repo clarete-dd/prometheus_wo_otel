@@ -27,8 +27,8 @@ import (
 	"github.com/stretchr/testify/require"
 	"go.uber.org/goleak"
 
-	"github.com/prometheus/prometheus/tsdb/fileutil"
-	"github.com/prometheus/prometheus/util/testutil"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb/fileutil"
+	"github.com/clarete-dd/prometheus_wo_otel/util/testutil"
 )
 
 func TestMain(m *testing.M) {

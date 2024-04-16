@@ -26,7 +26,7 @@ import (
 
 	"github.com/prometheus/client_golang/prometheus"
 
-	"github.com/prometheus/prometheus/discovery/targetgroup"
+	"github.com/clarete-dd/prometheus_wo_otel/discovery/targetgroup"
 )
 
 const (

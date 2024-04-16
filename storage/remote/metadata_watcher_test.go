@@ -22,7 +22,7 @@ import (
 	"github.com/prometheus/common/model"
 	"github.com/stretchr/testify/require"
 
-	"github.com/prometheus/prometheus/scrape"
+	"github.com/clarete-dd/prometheus_wo_otel/scrape"
 )
 
 var (

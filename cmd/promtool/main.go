@@ -47,19 +47,19 @@ import (
 	promconfig "github.com/prometheus/common/config"
 	"github.com/prometheus/common/expfmt"
 
-	"github.com/prometheus/prometheus/config"
-	"github.com/prometheus/prometheus/discovery"
-	"github.com/prometheus/prometheus/discovery/file"
-	"github.com/prometheus/prometheus/discovery/kubernetes"
-	"github.com/prometheus/prometheus/discovery/targetgroup"
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/model/rulefmt"
-	"github.com/prometheus/prometheus/notifier"
-	_ "github.com/prometheus/prometheus/plugins" // Register plugins.
-	"github.com/prometheus/prometheus/promql"
-	"github.com/prometheus/prometheus/promql/parser"
-	"github.com/prometheus/prometheus/scrape"
-	"github.com/prometheus/prometheus/util/documentcli"
+	"github.com/clarete-dd/prometheus_wo_otel/config"
+	"github.com/clarete-dd/prometheus_wo_otel/discovery"
+	"github.com/clarete-dd/prometheus_wo_otel/discovery/file"
+	"github.com/clarete-dd/prometheus_wo_otel/discovery/kubernetes"
+	"github.com/clarete-dd/prometheus_wo_otel/discovery/targetgroup"
+	"github.com/clarete-dd/prometheus_wo_otel/model/labels"
+	"github.com/clarete-dd/prometheus_wo_otel/model/rulefmt"
+	"github.com/clarete-dd/prometheus_wo_otel/notifier"
+	_ "github.com/clarete-dd/prometheus_wo_otel/plugins" // Register plugins.
+	"github.com/clarete-dd/prometheus_wo_otel/promql"
+	"github.com/clarete-dd/prometheus_wo_otel/promql/parser"
+	"github.com/clarete-dd/prometheus_wo_otel/scrape"
+	"github.com/clarete-dd/prometheus_wo_otel/util/documentcli"
 )
 
 const (

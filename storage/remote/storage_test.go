@@ -22,8 +22,8 @@ import (
 	common_config "github.com/prometheus/common/config"
 	"github.com/stretchr/testify/require"
 
-	"github.com/prometheus/prometheus/config"
-	"github.com/prometheus/prometheus/model/labels"
+	"github.com/clarete-dd/prometheus_wo_otel/config"
+	"github.com/clarete-dd/prometheus_wo_otel/model/labels"
 )
 
 func TestStorageLifecycle(t *testing.T) {
@@ -152,7 +152,7 @@ func baseRemoteReadConfig(host string) *config.RemoteReadConfig {
 
 // TestWriteStorageApplyConfigsDuringCommit helps detecting races when
 // ApplyConfig runs concurrently with Notify
-// See https://github.com/prometheus/prometheus/issues/12747
+// See https://github.com/clarete-dd/prometheus_wo_otel/issues/12747
 func TestWriteStorageApplyConfigsDuringCommit(t *testing.T) {
 	s := NewStorage(nil, nil, nil, t.TempDir(), defaultFlushDeadline, nil)
 

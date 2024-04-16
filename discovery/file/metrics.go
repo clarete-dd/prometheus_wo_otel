@@ -16,7 +16,7 @@ package file
 import (
 	"github.com/prometheus/client_golang/prometheus"
 
-	"github.com/prometheus/prometheus/discovery"
+	"github.com/clarete-dd/prometheus_wo_otel/discovery"
 )
 
 var _ discovery.DiscovererMetrics = (*fileMetrics)(nil)

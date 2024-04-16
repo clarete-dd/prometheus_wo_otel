@@ -32,12 +32,12 @@ import (
 	"github.com/prometheus/common/model"
 	"gopkg.in/yaml.v2"
 
-	"github.com/prometheus/prometheus/model/histogram"
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/promql"
-	"github.com/prometheus/prometheus/promql/parser"
-	"github.com/prometheus/prometheus/rules"
-	"github.com/prometheus/prometheus/storage"
+	"github.com/clarete-dd/prometheus_wo_otel/model/histogram"
+	"github.com/clarete-dd/prometheus_wo_otel/model/labels"
+	"github.com/clarete-dd/prometheus_wo_otel/promql"
+	"github.com/clarete-dd/prometheus_wo_otel/promql/parser"
+	"github.com/clarete-dd/prometheus_wo_otel/rules"
+	"github.com/clarete-dd/prometheus_wo_otel/storage"
 )
 
 // RulesUnitTest does unit testing of rules based on the unit testing files provided.

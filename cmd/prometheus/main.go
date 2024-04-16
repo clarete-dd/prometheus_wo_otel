@@ -53,30 +53,30 @@ import (
 	"k8s.io/klog"
 	klogv2 "k8s.io/klog/v2"
 
-	"github.com/prometheus/prometheus/config"
-	"github.com/prometheus/prometheus/discovery"
-	"github.com/prometheus/prometheus/discovery/legacymanager"
-	"github.com/prometheus/prometheus/discovery/targetgroup"
-	"github.com/prometheus/prometheus/model/exemplar"
-	"github.com/prometheus/prometheus/model/histogram"
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/model/metadata"
-	"github.com/prometheus/prometheus/model/relabel"
-	"github.com/prometheus/prometheus/notifier"
-	_ "github.com/prometheus/prometheus/plugins" // Register plugins.
-	"github.com/prometheus/prometheus/promql"
-	"github.com/prometheus/prometheus/promql/parser"
-	"github.com/prometheus/prometheus/rules"
-	"github.com/prometheus/prometheus/scrape"
-	"github.com/prometheus/prometheus/storage"
-	"github.com/prometheus/prometheus/storage/remote"
-	"github.com/prometheus/prometheus/tracing"
-	"github.com/prometheus/prometheus/tsdb"
-	"github.com/prometheus/prometheus/tsdb/agent"
-	"github.com/prometheus/prometheus/tsdb/wlog"
-	"github.com/prometheus/prometheus/util/documentcli"
-	"github.com/prometheus/prometheus/util/logging"
-	prom_runtime "github.com/prometheus/prometheus/util/runtime"
+	"github.com/clarete-dd/prometheus_wo_otel/config"
+	"github.com/clarete-dd/prometheus_wo_otel/discovery"
+	"github.com/clarete-dd/prometheus_wo_otel/discovery/legacymanager"
+	"github.com/clarete-dd/prometheus_wo_otel/discovery/targetgroup"
+	"github.com/clarete-dd/prometheus_wo_otel/model/exemplar"
+	"github.com/clarete-dd/prometheus_wo_otel/model/histogram"
+	"github.com/clarete-dd/prometheus_wo_otel/model/labels"
+	"github.com/clarete-dd/prometheus_wo_otel/model/metadata"
+	"github.com/clarete-dd/prometheus_wo_otel/model/relabel"
+	"github.com/clarete-dd/prometheus_wo_otel/notifier"
+	_ "github.com/clarete-dd/prometheus_wo_otel/plugins" // Register plugins.
+	"github.com/clarete-dd/prometheus_wo_otel/promql"
+	"github.com/clarete-dd/prometheus_wo_otel/promql/parser"
+	"github.com/clarete-dd/prometheus_wo_otel/rules"
+	"github.com/clarete-dd/prometheus_wo_otel/scrape"
+	"github.com/clarete-dd/prometheus_wo_otel/storage"
+	"github.com/clarete-dd/prometheus_wo_otel/storage/remote"
+	"github.com/clarete-dd/prometheus_wo_otel/tracing"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb/agent"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb/wlog"
+	"github.com/clarete-dd/prometheus_wo_otel/util/documentcli"
+	"github.com/clarete-dd/prometheus_wo_otel/util/logging"
+	prom_runtime "github.com/clarete-dd/prometheus_wo_otel/util/runtime"
 )
 
 var (
@@ -419,10 +419,10 @@ func main() {
 	serverOnlyFlag(a, "rules.max-concurrent-evals", "Global concurrency limit for independent rules that can run concurrently.").
 		Default("4").Int64Var(&cfg.maxConcurrentEvals)
 
-	a.Flag("scrape.adjust-timestamps", "Adjust scrape timestamps by up to `scrape.timestamp-tolerance` to align them to the intended schedule. See https://github.com/prometheus/prometheus/issues/7846 for more context. Experimental. This flag will be removed in a future release.").
+	a.Flag("scrape.adjust-timestamps", "Adjust scrape timestamps by up to `scrape.timestamp-tolerance` to align them to the intended schedule. See https://github.com/clarete-dd/prometheus_wo_otel/issues/7846 for more context. Experimental. This flag will be removed in a future release.").
 		Hidden().Default("true").BoolVar(&scrape.AlignScrapeTimestamps)
 
-	a.Flag("scrape.timestamp-tolerance", "Timestamp tolerance. See https://github.com/prometheus/prometheus/issues/7846 for more context. Experimental. This flag will be removed in a future release.").
+	a.Flag("scrape.timestamp-tolerance", "Timestamp tolerance. See https://github.com/clarete-dd/prometheus_wo_otel/issues/7846 for more context. Experimental. This flag will be removed in a future release.").
 		Hidden().Default("2ms").DurationVar(&scrape.ScrapeTimestampTolerance)
 
 	serverOnlyFlag(a, "alertmanager.notification-queue-capacity", "The capacity of the queue for pending Alertmanager notifications.").

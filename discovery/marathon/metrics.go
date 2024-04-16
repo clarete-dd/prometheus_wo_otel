@@ -14,7 +14,7 @@
 package marathon
 
 import (
-	"github.com/prometheus/prometheus/discovery"
+	"github.com/clarete-dd/prometheus_wo_otel/discovery"
 )
 
 var _ discovery.DiscovererMetrics = (*marathonMetrics)(nil)

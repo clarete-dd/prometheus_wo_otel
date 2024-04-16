@@ -32,17 +32,17 @@ import (
 	"go.uber.org/goleak"
 	"gopkg.in/yaml.v2"
 
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/model/rulefmt"
-	"github.com/prometheus/prometheus/model/timestamp"
-	"github.com/prometheus/prometheus/model/value"
-	"github.com/prometheus/prometheus/promql"
-	"github.com/prometheus/prometheus/promql/parser"
-	"github.com/prometheus/prometheus/storage"
-	"github.com/prometheus/prometheus/tsdb/chunkenc"
-	"github.com/prometheus/prometheus/tsdb/tsdbutil"
-	"github.com/prometheus/prometheus/util/teststorage"
-	prom_testutil "github.com/prometheus/prometheus/util/testutil"
+	"github.com/clarete-dd/prometheus_wo_otel/model/labels"
+	"github.com/clarete-dd/prometheus_wo_otel/model/rulefmt"
+	"github.com/clarete-dd/prometheus_wo_otel/model/timestamp"
+	"github.com/clarete-dd/prometheus_wo_otel/model/value"
+	"github.com/clarete-dd/prometheus_wo_otel/promql"
+	"github.com/clarete-dd/prometheus_wo_otel/promql/parser"
+	"github.com/clarete-dd/prometheus_wo_otel/storage"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb/chunkenc"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb/tsdbutil"
+	"github.com/clarete-dd/prometheus_wo_otel/util/teststorage"
+	prom_testutil "github.com/clarete-dd/prometheus_wo_otel/util/testutil"
 )
 
 func TestMain(m *testing.M) {

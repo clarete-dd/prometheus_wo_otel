@@ -14,7 +14,7 @@
 package openstack
 
 import (
-	"github.com/prometheus/prometheus/discovery"
+	"github.com/clarete-dd/prometheus_wo_otel/discovery"
 )
 
 type openstackMetrics struct {

@@ -27,11 +27,11 @@ import (
 	"github.com/gogo/protobuf/types"
 	"github.com/prometheus/common/model"
 
-	"github.com/prometheus/prometheus/model/exemplar"
-	"github.com/prometheus/prometheus/model/histogram"
-	"github.com/prometheus/prometheus/model/labels"
+	"github.com/clarete-dd/prometheus_wo_otel/model/exemplar"
+	"github.com/clarete-dd/prometheus_wo_otel/model/histogram"
+	"github.com/clarete-dd/prometheus_wo_otel/model/labels"
 
-	dto "github.com/prometheus/prometheus/prompb/io/prometheus/client"
+	dto "github.com/clarete-dd/prometheus_wo_otel/prompb/io/prometheus/client"
 )
 
 // ProtobufParser is a very inefficient way of unmarshaling the old Prometheus

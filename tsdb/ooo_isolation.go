@@ -17,7 +17,7 @@ import (
 	"container/list"
 	"sync"
 
-	"github.com/prometheus/prometheus/tsdb/chunks"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb/chunks"
 )
 
 type oooIsolation struct {

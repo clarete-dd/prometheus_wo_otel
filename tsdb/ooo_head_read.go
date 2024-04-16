@@ -21,12 +21,12 @@ import (
 
 	"github.com/oklog/ulid"
 
-	"github.com/prometheus/prometheus/model/labels"
-	"github.com/prometheus/prometheus/storage"
-	"github.com/prometheus/prometheus/tsdb/chunkenc"
-	"github.com/prometheus/prometheus/tsdb/chunks"
-	"github.com/prometheus/prometheus/tsdb/index"
-	"github.com/prometheus/prometheus/tsdb/tombstones"
+	"github.com/clarete-dd/prometheus_wo_otel/model/labels"
+	"github.com/clarete-dd/prometheus_wo_otel/storage"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb/chunkenc"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb/chunks"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb/index"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb/tombstones"
 )
 
 var _ IndexReader = &OOOHeadIndexReader{}

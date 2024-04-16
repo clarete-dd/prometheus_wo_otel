@@ -19,7 +19,7 @@ import (
 	"github.com/go-kit/log"
 	"github.com/stretchr/testify/require"
 
-	"github.com/prometheus/prometheus/util/testutil"
+	"github.com/clarete-dd/prometheus_wo_otel/util/testutil"
 )
 
 func TestLockfile(t *testing.T) {

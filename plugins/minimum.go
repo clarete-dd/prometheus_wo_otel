@@ -14,6 +14,6 @@
 package plugins
 
 import (
-	_ "github.com/prometheus/prometheus/discovery/file" // Register file plugin.
-	_ "github.com/prometheus/prometheus/discovery/http" // Register http plugin.
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/file" // Register file plugin.
+	_ "github.com/clarete-dd/prometheus_wo_otel/discovery/http" // Register http plugin.
 )

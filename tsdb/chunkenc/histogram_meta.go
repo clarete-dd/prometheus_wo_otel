@@ -16,7 +16,7 @@ package chunkenc
 import (
 	"math"
 
-	"github.com/prometheus/prometheus/model/histogram"
+	"github.com/clarete-dd/prometheus_wo_otel/model/histogram"
 )
 
 func writeHistogramChunkLayout(

@@ -18,8 +18,8 @@ import (
 	"slices"
 	"sort"
 
-	"github.com/prometheus/prometheus/model/histogram"
-	"github.com/prometheus/prometheus/model/labels"
+	"github.com/clarete-dd/prometheus_wo_otel/model/histogram"
+	"github.com/clarete-dd/prometheus_wo_otel/model/labels"
 )
 
 // smallDeltaTolerance is the threshold for relative deltas between classic

@@ -25,9 +25,9 @@ import (
 	"github.com/prometheus/common/model"
 	"google.golang.org/protobuf/types/known/anypb"
 
-	"github.com/prometheus/prometheus/discovery"
-	"github.com/prometheus/prometheus/util/osutil"
-	"github.com/prometheus/prometheus/util/strutil"
+	"github.com/clarete-dd/prometheus_wo_otel/discovery"
+	"github.com/clarete-dd/prometheus_wo_otel/util/osutil"
+	"github.com/clarete-dd/prometheus_wo_otel/util/strutil"
 )
 
 // DefaultKumaSDConfig is the default Kuma MADS SD configuration.

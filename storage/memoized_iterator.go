@@ -16,8 +16,8 @@ package storage
 import (
 	"math"
 
-	"github.com/prometheus/prometheus/model/histogram"
-	"github.com/prometheus/prometheus/tsdb/chunkenc"
+	"github.com/clarete-dd/prometheus_wo_otel/model/histogram"
+	"github.com/clarete-dd/prometheus_wo_otel/tsdb/chunkenc"
 )
 
 // MemoizedSeriesIterator wraps an iterator with a buffer to look back the previous element.

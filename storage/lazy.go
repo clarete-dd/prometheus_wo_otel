@@ -14,7 +14,7 @@
 package storage
 
 import (
-	"github.com/prometheus/prometheus/util/annotations"
+	"github.com/clarete-dd/prometheus_wo_otel/util/annotations"
 )
 
 // lazyGenericSeriesSet is a wrapped series set that is initialised on first call to Next().
