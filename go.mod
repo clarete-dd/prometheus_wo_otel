@@ -1,4 +1,4 @@
-module github.com/prometheus/prometheus
+module github.com/clarete-dd/prometheus/prometheus_wo_otel
 
 go 1.21
 
