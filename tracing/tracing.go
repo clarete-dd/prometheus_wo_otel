@@ -23,16 +23,6 @@ import (
 	"github.com/go-kit/log/level"
 	config_util "github.com/prometheus/common/config"
 	"github.com/prometheus/common/version"
-	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
-	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
-	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
-	"go.opentelemetry.io/otel/propagation"
-	"go.opentelemetry.io/otel/sdk/resource"
-	tracesdk "go.opentelemetry.io/otel/sdk/trace"
-	semconv "go.opentelemetry.io/otel/semconv/v1.24.0"
-	"go.opentelemetry.io/otel/trace"
-	"go.opentelemetry.io/otel/trace/noop"
 	"google.golang.org/grpc/credentials"
 
 	"github.com/prometheus/prometheus/config"
@@ -60,10 +50,6 @@ func NewManager(logger log.Logger) *Manager {
 // Run starts the tracing manager. It registers the global text map propagator and error handler.
 // It is blocking.
 func (m *Manager) Run() {
-	otel.SetTextMapPropagator(propagation.TraceContext{})
-	otel.SetErrorHandler(otelErrHandler(func(err error) {
-		level.Error(m.logger).Log("msg", "OpenTelemetry handler returned an error", "err", err)
-	}))
 	<-m.done
 }
 
@@ -88,19 +74,9 @@ func (m *Manager) ApplyConfig(cfg *config.Config) error {
 	if cfg.TracingConfig.Endpoint == "" {
 		m.config = cfg.TracingConfig
 		m.shutdownFunc = nil
-		otel.SetTracerProvider(noop.NewTracerProvider())
 		level.Info(m.logger).Log("msg", "Tracing provider uninstalled.")
 		return nil
 	}
-
-	tp, shutdownFunc, err := buildTracerProvider(context.Background(), cfg.TracingConfig)
-	if err != nil {
-		return fmt.Errorf("failed to install a new tracer provider: %w", err)
-	}
-
-	m.shutdownFunc = shutdownFunc
-	m.config = cfg.TracingConfig
-	otel.SetTracerProvider(tp)
 
 	level.Info(m.logger).Log("msg", "Successfully installed a new tracer provider.")
 	return nil
@@ -125,109 +101,4 @@ type otelErrHandler func(err error)
 
 func (o otelErrHandler) Handle(err error) {
 	o(err)
-}
-
-// buildTracerProvider return a new tracer provider ready for installation, together
-// with a shutdown function.
-func buildTracerProvider(ctx context.Context, tracingCfg config.TracingConfig) (trace.TracerProvider, func() error, error) {
-	client, err := getClient(tracingCfg)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	exp, err := otlptrace.New(ctx, client)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	// Create a resource describing the service and the runtime.
-	res, err := resource.New(
-		ctx,
-		resource.WithSchemaURL(semconv.SchemaURL),
-		resource.WithAttributes(
-			semconv.ServiceNameKey.String(serviceName),
-			semconv.ServiceVersionKey.String(version.Version),
-		),
-		resource.WithProcessRuntimeDescription(),
-		resource.WithTelemetrySDK(),
-	)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	tp := tracesdk.NewTracerProvider(
-		tracesdk.WithBatcher(exp),
-		tracesdk.WithSampler(tracesdk.ParentBased(
-			tracesdk.TraceIDRatioBased(tracingCfg.SamplingFraction),
-		)),
-		tracesdk.WithResource(res),
-	)
-
-	return tp, func() error {
-		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-		defer cancel()
-		err := tp.Shutdown(ctx)
-		if err != nil {
-			return err
-		}
-
-		return nil
-	}, nil
-}
-
-// getClient returns an appropriate OTLP client (either gRPC or HTTP), based
-// on the provided tracing configuration.
-func getClient(tracingCfg config.TracingConfig) (otlptrace.Client, error) {
-	var client otlptrace.Client
-	switch tracingCfg.ClientType {
-	case config.TracingClientGRPC:
-		opts := []otlptracegrpc.Option{otlptracegrpc.WithEndpoint(tracingCfg.Endpoint)}
-		if tracingCfg.Insecure {
-			opts = append(opts, otlptracegrpc.WithInsecure())
-		} else {
-			// Use of TLS Credentials forces the use of TLS. Therefore it can
-			// only be set when `insecure` is set to false.
-			tlsConf, err := config_util.NewTLSConfig(&tracingCfg.TLSConfig)
-			if err != nil {
-				return nil, err
-			}
-			opts = append(opts, otlptracegrpc.WithTLSCredentials(credentials.NewTLS(tlsConf)))
-		}
-		if tracingCfg.Compression != "" {
-			opts = append(opts, otlptracegrpc.WithCompressor(tracingCfg.Compression))
-		}
-		if len(tracingCfg.Headers) != 0 {
-			opts = append(opts, otlptracegrpc.WithHeaders(tracingCfg.Headers))
-		}
-		if tracingCfg.Timeout != 0 {
-			opts = append(opts, otlptracegrpc.WithTimeout(time.Duration(tracingCfg.Timeout)))
-		}
-
-		client = otlptracegrpc.NewClient(opts...)
-	case config.TracingClientHTTP:
-		opts := []otlptracehttp.Option{otlptracehttp.WithEndpoint(tracingCfg.Endpoint)}
-		if tracingCfg.Insecure {
-			opts = append(opts, otlptracehttp.WithInsecure())
-		}
-		// Currently, OTEL supports only gzip compression.
-		if tracingCfg.Compression == config.GzipCompression {
-			opts = append(opts, otlptracehttp.WithCompression(otlptracehttp.GzipCompression))
-		}
-		if len(tracingCfg.Headers) != 0 {
-			opts = append(opts, otlptracehttp.WithHeaders(tracingCfg.Headers))
-		}
-		if tracingCfg.Timeout != 0 {
-			opts = append(opts, otlptracehttp.WithTimeout(time.Duration(tracingCfg.Timeout)))
-		}
-
-		tlsConf, err := config_util.NewTLSConfig(&tracingCfg.TLSConfig)
-		if err != nil {
-			return nil, err
-		}
-		opts = append(opts, otlptracehttp.WithTLSClientConfig(tlsConf))
-
-		client = otlptracehttp.NewClient(opts...)
-	}
-
-	return client, nil
 }

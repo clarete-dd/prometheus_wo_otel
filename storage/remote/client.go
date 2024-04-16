@@ -1,5 +1,5 @@
 // Copyright 2016 The Prometheus Authors
-// Licensed under the Apache License, Version 2.0 (the "License");
+rom// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -31,9 +31,6 @@ import (
 	"github.com/prometheus/common/model"
 	"github.com/prometheus/common/sigv4"
 	"github.com/prometheus/common/version"
-	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
-	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/trace"
 
 	"github.com/prometheus/prometheus/prompb"
 	"github.com/prometheus/prometheus/storage/remote/azuread"
@@ -123,7 +120,6 @@ func NewReadClient(name string, conf *ClientConfig) (ReadClient, error) {
 	if len(conf.Headers) > 0 {
 		t = newInjectHeadersRoundTripper(conf.Headers, t)
 	}
-	httpClient.Transport = otelhttp.NewTransport(t)
 
 	return &Client{
 		remoteName:          name,
@@ -161,8 +157,6 @@ func NewWriteClient(name string, conf *ClientConfig) (WriteClient, error) {
 			return nil, err
 		}
 	}
-
-	httpClient.Transport = otelhttp.NewTransport(t)
 
 	return &Client{
 		remoteName:       name,
@@ -216,9 +210,6 @@ func (c *Client) Store(ctx context.Context, req []byte, attempt int) error {
 
 	ctx, cancel := context.WithTimeout(ctx, c.timeout)
 	defer cancel()
-
-	ctx, span := otel.Tracer("").Start(ctx, "Remote Store", trace.WithSpanKind(trace.SpanKindClient))
-	defer span.End()
 
 	httpResp, err := c.Client.Do(httpReq.WithContext(ctx))
 	if err != nil {
@@ -302,9 +293,6 @@ func (c *Client) Read(ctx context.Context, query *prompb.Query) (*prompb.QueryRe
 
 	ctx, cancel := context.WithTimeout(ctx, c.timeout)
 	defer cancel()
-
-	ctx, span := otel.Tracer("").Start(ctx, "Remote Read", trace.WithSpanKind(trace.SpanKindClient))
-	defer span.End()
 
 	start := time.Now()
 	httpResp, err := c.Client.Do(httpReq.WithContext(ctx))

@@ -28,8 +28,6 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/golang/snappy"
 	"github.com/prometheus/common/model"
-	"go.opentelemetry.io/collector/pdata/pmetric/pmetricotlp"
-
 	"github.com/prometheus/prometheus/model/exemplar"
 	"github.com/prometheus/prometheus/model/histogram"
 	"github.com/prometheus/prometheus/model/labels"
@@ -813,57 +811,4 @@ func DecodeWriteRequest(r io.Reader) (*prompb.WriteRequest, error) {
 	}
 
 	return &req, nil
-}
-
-func DecodeOTLPWriteRequest(r *http.Request) (pmetricotlp.ExportRequest, error) {
-	contentType := r.Header.Get("Content-Type")
-	var decoderFunc func(buf []byte) (pmetricotlp.ExportRequest, error)
-	switch contentType {
-	case pbContentType:
-		decoderFunc = func(buf []byte) (pmetricotlp.ExportRequest, error) {
-			req := pmetricotlp.NewExportRequest()
-			return req, req.UnmarshalProto(buf)
-		}
-
-	case jsonContentType:
-		decoderFunc = func(buf []byte) (pmetricotlp.ExportRequest, error) {
-			req := pmetricotlp.NewExportRequest()
-			return req, req.UnmarshalJSON(buf)
-		}
-
-	default:
-		return pmetricotlp.NewExportRequest(), fmt.Errorf("unsupported content type: %s, supported: [%s, %s]", contentType, jsonContentType, pbContentType)
-	}
-
-	reader := r.Body
-	// Handle compression.
-	switch r.Header.Get("Content-Encoding") {
-	case "gzip":
-		gr, err := gzip.NewReader(reader)
-		if err != nil {
-			return pmetricotlp.NewExportRequest(), err
-		}
-		reader = gr
-
-	case "":
-		// No compression.
-
-	default:
-		return pmetricotlp.NewExportRequest(), fmt.Errorf("unsupported compression: %s. Only \"gzip\" or no compression supported", r.Header.Get("Content-Encoding"))
-	}
-
-	body, err := io.ReadAll(reader)
-	if err != nil {
-		r.Body.Close()
-		return pmetricotlp.NewExportRequest(), err
-	}
-	if err = r.Body.Close(); err != nil {
-		return pmetricotlp.NewExportRequest(), err
-	}
-	otlpReq, err := decoderFunc(body)
-	if err != nil {
-		return pmetricotlp.NewExportRequest(), err
-	}
-
-	return otlpReq, nil
 }

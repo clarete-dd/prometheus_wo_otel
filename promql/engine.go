@@ -20,7 +20,6 @@ import (
 	"errors"
 	"fmt"
 	"math"
-	"reflect"
 	"runtime"
 	"slices"
 	"sort"
@@ -33,9 +32,6 @@ import (
 	"github.com/go-kit/log/level"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/common/model"
-	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/trace"
 
 	"github.com/prometheus/prometheus/model/histogram"
 	"github.com/prometheus/prometheus/model/labels"
@@ -236,10 +232,6 @@ func (q *query) Close() {
 
 // Exec implements the Query interface.
 func (q *query) Exec(ctx context.Context) *Result {
-	if span := trace.SpanFromContext(ctx); span != nil {
-		span.SetAttributes(attribute.String(queryTag, q.stmt.String()))
-	}
-
 	// Exec query.
 	res, warnings, err := q.ng.exec(ctx, q)
 	return &Result{Err: err, Value: res, Warnings: warnings}
@@ -614,9 +606,6 @@ func (ng *Engine) exec(ctx context.Context, q *query) (v parser.Value, ws annota
 				f = append(f, "error", err)
 			}
 			f = append(f, "stats", stats.NewQueryStats(q.Stats()))
-			if span := trace.SpanFromContext(ctx); span != nil {
-				f = append(f, "spanID", span.SpanContext().SpanID())
-			}
 			if origin := ctx.Value(QueryOrigin{}); origin != nil {
 				for k, v := range origin.(map[string]interface{}) {
 					f = append(f, k, v)
@@ -1429,11 +1418,6 @@ func (ev *evaluator) eval(expr parser.Expr) (parser.Value, annotations.Annotatio
 		ev.error(err)
 	}
 	numSteps := int((ev.endTimestamp-ev.startTimestamp)/ev.interval) + 1
-
-	// Create a new span to help investigate inner evaluation performances.
-	ctxWithSpan, span := otel.Tracer("").Start(ev.ctx, stats.InnerEvalTime.SpanOperation()+" eval "+reflect.TypeOf(expr).String())
-	ev.ctx = ctxWithSpan
-	defer span.End()
 
 	switch e := expr.(type) {
 	case *parser.AggregateExpr:

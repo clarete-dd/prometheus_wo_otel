@@ -30,9 +30,6 @@ import (
 	"github.com/go-kit/log/level"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/common/model"
-	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/codes"
 
 	"github.com/prometheus/prometheus/model/labels"
 	"github.com/prometheus/prometheus/model/timestamp"
@@ -452,20 +449,12 @@ func (g *Group) Eval(ctx context.Context, ts time.Time) {
 			}
 
 			logger := log.WithPrefix(g.logger, "name", rule.Name(), "index", i)
-			ctx, sp := otel.Tracer("").Start(ctx, "rule")
-			sp.SetAttributes(attribute.String("name", rule.Name()))
 			defer func(t time.Time) {
-				sp.End()
-
 				since := time.Since(t)
 				g.metrics.EvalDuration.Observe(since.Seconds())
 				rule.SetEvaluationDuration(since)
 				rule.SetEvaluationTimestamp(t)
 			}(time.Now())
-
-			if sp.SpanContext().IsSampled() && sp.SpanContext().HasTraceID() {
-				logger = log.WithPrefix(logger, "trace_id", sp.SpanContext().TraceID())
-			}
 
 			g.metrics.EvalTotal.WithLabelValues(GroupKey(g.File(), g.Name())).Inc()
 
@@ -473,7 +462,6 @@ func (g *Group) Eval(ctx context.Context, ts time.Time) {
 			if err != nil {
 				rule.SetHealth(HealthBad)
 				rule.SetLastError(err)
-				sp.SetStatus(codes.Error, err.Error())
 				g.metrics.EvalFailures.WithLabelValues(GroupKey(g.File(), g.Name())).Inc()
 
 				// Canceled queries are intentional termination of queries. This normally
@@ -503,7 +491,6 @@ func (g *Group) Eval(ctx context.Context, ts time.Time) {
 				if err := app.Commit(); err != nil {
 					rule.SetHealth(HealthBad)
 					rule.SetLastError(err)
-					sp.SetStatus(codes.Error, err.Error())
 					g.metrics.EvalFailures.WithLabelValues(GroupKey(g.File(), g.Name())).Inc()
 
 					level.Warn(logger).Log("msg", "Rule sample appending failed", "err", err)
@@ -522,7 +509,6 @@ func (g *Group) Eval(ctx context.Context, ts time.Time) {
 				if err != nil {
 					rule.SetHealth(HealthBad)
 					rule.SetLastError(err)
-					sp.SetStatus(codes.Error, err.Error())
 					unwrappedErr := errors.Unwrap(err)
 					if unwrappedErr == nil {
 						unwrappedErr = err

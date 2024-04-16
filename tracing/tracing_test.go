@@ -19,15 +19,11 @@ import (
 	"github.com/go-kit/log"
 	config_util "github.com/prometheus/common/config"
 	"github.com/stretchr/testify/require"
-	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/trace/noop"
 
 	"github.com/prometheus/prometheus/config"
 )
 
 func TestInstallingNewTracerProvider(t *testing.T) {
-	tpBefore := otel.GetTracerProvider()
-
 	m := NewManager(log.NewNopLogger())
 	cfg := config.Config{
 		TracingConfig: config.TracingConfig{
@@ -37,7 +33,6 @@ func TestInstallingNewTracerProvider(t *testing.T) {
 	}
 
 	require.NoError(t, m.ApplyConfig(&cfg))
-	require.NotEqual(t, tpBefore, otel.GetTracerProvider())
 }
 
 func TestReinstallingTracerProvider(t *testing.T) {
@@ -51,11 +46,9 @@ func TestReinstallingTracerProvider(t *testing.T) {
 	}
 
 	require.NoError(t, m.ApplyConfig(&cfg))
-	tpFirstConfig := otel.GetTracerProvider()
 
 	// Trying to apply the same config should not reinstall provider.
 	require.NoError(t, m.ApplyConfig(&cfg))
-	require.Equal(t, tpFirstConfig, otel.GetTracerProvider())
 
 	cfg2 := config.Config{
 		TracingConfig: config.TracingConfig{
@@ -66,13 +59,10 @@ func TestReinstallingTracerProvider(t *testing.T) {
 	}
 
 	require.NoError(t, m.ApplyConfig(&cfg2))
-	require.NotEqual(t, tpFirstConfig, otel.GetTracerProvider())
-	tpSecondConfig := otel.GetTracerProvider()
 
 	// Setting previously unset option should reinstall provider.
 	cfg2.TracingConfig.Compression = "gzip"
 	require.NoError(t, m.ApplyConfig(&cfg2))
-	require.NotEqual(t, tpSecondConfig, otel.GetTracerProvider())
 }
 
 func TestReinstallingTracerProviderWithTLS(t *testing.T) {
@@ -88,11 +78,9 @@ func TestReinstallingTracerProviderWithTLS(t *testing.T) {
 	}
 
 	require.NoError(t, m.ApplyConfig(&cfg))
-	tpFirstConfig := otel.GetTracerProvider()
 
 	// Trying to apply the same config with TLS should reinstall provider.
 	require.NoError(t, m.ApplyConfig(&cfg))
-	require.NotEqual(t, tpFirstConfig, otel.GetTracerProvider())
 }
 
 func TestUninstallingTracerProvider(t *testing.T) {
@@ -105,7 +93,6 @@ func TestUninstallingTracerProvider(t *testing.T) {
 	}
 
 	require.NoError(t, m.ApplyConfig(&cfg))
-	require.NotEqual(t, noop.NewTracerProvider(), otel.GetTracerProvider())
 
 	// Uninstall by passing empty config.
 	cfg2 := config.Config{
@@ -113,8 +100,6 @@ func TestUninstallingTracerProvider(t *testing.T) {
 	}
 
 	require.NoError(t, m.ApplyConfig(&cfg2))
-	// Make sure we get a no-op tracer provider after uninstallation.
-	require.Equal(t, noop.NewTracerProvider(), otel.GetTracerProvider())
 }
 
 func TestTracerProviderShutdown(t *testing.T) {

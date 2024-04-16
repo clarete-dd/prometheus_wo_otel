@@ -77,7 +77,6 @@ import (
 	"github.com/prometheus/prometheus/util/documentcli"
 	"github.com/prometheus/prometheus/util/logging"
 	prom_runtime "github.com/prometheus/prometheus/util/runtime"
-	"github.com/prometheus/prometheus/web"
 )
 
 var (

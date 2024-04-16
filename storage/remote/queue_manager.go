@@ -27,9 +27,6 @@ import (
 	"github.com/golang/snappy"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/common/model"
-	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/attribute"
-	semconv "go.opentelemetry.io/otel/semconv/v1.21.0"
 	"go.uber.org/atomic"
 
 	"github.com/prometheus/prometheus/config"
@@ -550,20 +547,6 @@ func (t *QueueManager) sendMetadataWithBackoff(ctx context.Context, metadata []p
 	metadataCount := len(metadata)
 
 	attemptStore := func(try int) error {
-		ctx, span := otel.Tracer("").Start(ctx, "Remote Metadata Send Batch")
-		defer span.End()
-
-		span.SetAttributes(
-			attribute.Int("metadata", metadataCount),
-			attribute.Int("try", try),
-			attribute.String("remote_name", t.storeClient.Name()),
-			attribute.String("remote_url", t.storeClient.Endpoint()),
-		)
-		// Attributes defined by OpenTelemetry semantic conventions.
-		if try > 0 {
-			span.SetAttributes(semconv.HTTPResendCount(try))
-		}
-
 		begin := time.Now()
 		err := t.storeClient.Store(ctx, req, try)
 		t.metrics.sentBatchDuration.Observe(time.Since(begin).Seconds())
@@ -1593,24 +1576,6 @@ func (s *shards) sendSamplesWithBackoff(ctx context.Context, samples []prompb.Ti
 				return err
 			}
 			*buf = req
-		}
-
-		ctx, span := otel.Tracer("").Start(ctx, "Remote Send Batch")
-		defer span.End()
-
-		span.SetAttributes(
-			attribute.Int("request_size", reqSize),
-			attribute.Int("samples", sampleCount),
-			attribute.Int("try", try),
-			attribute.String("remote_name", s.qm.storeClient.Name()),
-			attribute.String("remote_url", s.qm.storeClient.Endpoint()),
-		)
-
-		if exemplarCount > 0 {
-			span.SetAttributes(attribute.Int("exemplars", exemplarCount))
-		}
-		if histogramCount > 0 {
-			span.SetAttributes(attribute.Int("histograms", histogramCount))
 		}
 
 		begin := time.Now()

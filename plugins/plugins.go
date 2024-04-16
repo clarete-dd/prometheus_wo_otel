@@ -52,9 +52,6 @@ import (
 	// Register marathon plugin.
 	_ "github.com/prometheus/prometheus/discovery/marathon"
 
-	// Register moby plugin.
-	_ "github.com/prometheus/prometheus/discovery/moby"
-
 	// Register nomad plugin.
 	_ "github.com/prometheus/prometheus/discovery/nomad"
 

@@ -44,7 +44,6 @@ import (
 	"github.com/prometheus/prometheus/discovery/kubernetes"
 	"github.com/prometheus/prometheus/discovery/linode"
 	"github.com/prometheus/prometheus/discovery/marathon"
-	"github.com/prometheus/prometheus/discovery/moby"
 	"github.com/prometheus/prometheus/discovery/nomad"
 	"github.com/prometheus/prometheus/discovery/openstack"
 	"github.com/prometheus/prometheus/discovery/ovhcloud"
